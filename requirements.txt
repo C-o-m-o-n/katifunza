@@ -1,3 +1,4 @@
+bs4 0.0.2
 streamlit
 langchain==0.2.7
 langchain-chroma==0.1.2
