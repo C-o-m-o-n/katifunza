@@ -7,9 +7,14 @@ from langchain_cohere import ChatCohere
 from langchain_chroma import Chroma
 from langchain_cohere import CohereEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+import streamlit as st
 
-llm = ChatCohere(cohere_api_key="cohere_api_key", model="command-r")
-print(llm)
+cohere_api_key = st.secrets["cohere_api_key"]
+
+# print(cohere_api_key)
+
+llm = ChatCohere(cohere_api_key=cohere_api_key, model=st.secrets["model"])
+# print(llm)
 
 loader =  PDFMinerPDFasHTMLLoader("TheConstitutionOfKenya.pdf")
 
@@ -59,15 +64,21 @@ all_splits = text_splitter.create_documents(snippets)
 
 # print(all_splits)
 
-embeddings_model = CohereEmbeddings(="cohere_api_key", model='embed-english-v3.0')
+embeddings_model = CohereEmbeddings(cohere_api_key=cohere_api_key, model='embed-english-v3.0')
 
 vectorstore = Chroma.from_documents(documents=all_splits, embedding=embeddings_model)
 
 retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 6})
 
-retrieved_docs = retriever.invoke("what rights of the people?.")
+#retrieved_docs = retriever.invoke("what rights of the people?.")
+def retrieved_docs(prompt):
+    result = retriever.invoke(prompt)
+    return result
+
+if __name__ == "__main__":
+    retrieved_docs(prompt)
 
 # print(retrieved_docs[0].page_content)
-for i in retrieved_docs:
-    print(i)
+# for i in retrieved_docs:
+#     print(i)
 # print(one.page_content for one in retrieved_docs)

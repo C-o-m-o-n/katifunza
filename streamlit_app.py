@@ -1,6 +1,17 @@
 import streamlit as st
+from magic.magic import retrieved_docs
 
-st.title("🎈 My new app")
+st.title("Welcome to Katifunza")
 st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
+    "Where we simplify the constitution for you"
 )
+
+txt = st.text_area(
+    "Enter your question about the constitution",
+    )
+
+if st.button("Send"):
+    st.write("The output will appear bellow:")
+    ans_list = retrieved_docs(txt)
+    for ans in ans_list:
+        st.write(ans.page_content)
