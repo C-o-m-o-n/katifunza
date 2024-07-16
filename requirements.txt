@@ -11,5 +11,5 @@ langchain-experimental==0.0.62
 langchain-text-splitters==0.2.2
 protobuf==3.20
 pypdf==4.2.0
-
+pysqlite3-binary
 
