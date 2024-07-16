@@ -8,7 +8,7 @@ from langchain_chroma import Chroma
 from langchain_cohere import CohereEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-llm = ChatCohere(cohere_api_key="B9yeIcEuk9Ed3xEpMvfrh3iysUoZyF5FYI0lkYSX", model="command-r")
+llm = ChatCohere(cohere_api_key="cohere_api_key", model="command-r")
 print(llm)
 
 loader =  PDFMinerPDFasHTMLLoader("TheConstitutionOfKenya.pdf")
@@ -59,7 +59,7 @@ all_splits = text_splitter.create_documents(snippets)
 
 # print(all_splits)
 
-embeddings_model = CohereEmbeddings(="B9yeIcEuk9Ed3xEpMvfrh3iysUoZyF5FYI0lkYSX", model='embed-english-v3.0')
+embeddings_model = CohereEmbeddings(="cohere_api_key", model='embed-english-v3.0')
 
 vectorstore = Chroma.from_documents(documents=all_splits, embedding=embeddings_model)
 
