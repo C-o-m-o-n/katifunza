@@ -1,6 +1,6 @@
 bs4
-chroma-hnswlib==0.7.3
-chromadb==0.5.3
+chroma-hnswlib
+chromadb
 streamlit
 langchain==0.2.7
 langchain-chroma==0.1.2
@@ -11,5 +11,5 @@ langchain-experimental==0.0.62
 langchain-text-splitters==0.2.2
 protobuf==3.20
 pypdf==4.2.0
-pysqlite3-binary
+
 
