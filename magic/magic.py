@@ -9,8 +9,6 @@ from langchain_community.vectorstores import FAISS
 import streamlit as st
 
 cohere_api_key = st.secrets["cohere_api_key"]
-
-# pinecone_api_key="274a17e6-4589-46d5-9323-c324259a2905"
 # st.secrets["pinecone_api_key"]
 llm = ChatCohere(cohere_api_key=cohere_api_key, model=st.secrets["model"])
 # print(llm)
