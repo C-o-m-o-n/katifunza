@@ -1,18 +1,17 @@
 import re
-import getpass
-import os
 from bs4 import BeautifulSoup
 from langchain_community.document_loaders import PDFMinerPDFasHTMLLoader
 from langchain_cohere import ChatCohere
-from langchain_chroma import Chroma
 from langchain_cohere import CohereEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+# from langchain_pinecone import Pinecone, PineconeVectorStore
+from langchain_community.vectorstores import FAISS
 import streamlit as st
 
 cohere_api_key = st.secrets["cohere_api_key"]
 
-# print(cohere_api_key)
-
+# pinecone_api_key="274a17e6-4589-46d5-9323-c324259a2905"
+# st.secrets["pinecone_api_key"]
 llm = ChatCohere(cohere_api_key=cohere_api_key, model=st.secrets["model"])
 # print(llm)
 
@@ -66,8 +65,15 @@ all_splits = text_splitter.create_documents(snippets)
 
 embeddings_model = CohereEmbeddings(cohere_api_key=cohere_api_key, model='embed-english-v3.0')
 
-vectorstore = Chroma.from_documents(documents=all_splits, embedding=embeddings_model)
+# vectorstore = Chroma.from_documents(documents=all_splits, embedding=embeddings_model)
 
+
+index_name = "langchain-test-index"
+
+# Connect to Pinecone index and insert the chunked docs as contents
+# vectorstore = PineconeVectorStore.from_documents(all_splits, embeddings_model, index_name=index_name)
+
+vectorstore = FAISS.from_documents(all_splits, embeddings_model)
 retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 6})
 
 #retrieved_docs = retriever.invoke("what rights of the people?.")
@@ -76,7 +82,7 @@ def retrieved_docs(prompt):
     return result
 
 if __name__ == "__main__":
-    retrieved_docs(prompt)
+    retrieved_docs("prompt")
 
 # print(retrieved_docs[0].page_content)
 # for i in retrieved_docs:

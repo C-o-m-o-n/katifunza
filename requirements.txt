@@ -1,16 +1,15 @@
 bs4
-chroma-hnswlib
-chromadb
 streamlit
-langchain==0.2.7
-langchain-chroma==0.1.2
-langchain-cohere==0.1.9
-langchain-community==0.2.7
-langchain-core==0.2.18
-langchain-experimental==0.0.62
-langchain-text-splitters==0.2.2
-protobuf==3.20
-pypdf==4.2.0
+faiss-cpu
+langchain
+langchain-pinecone
+langchain-cohere
+langchain-community
+langchain-core
+langchain-text-splitters
+pdfminer.six 
+protobuf
+pypdf
 pysqlite3-binary
 db-sqlite3
 
