@@ -2,13 +2,11 @@ import streamlit as st
 from magic.magic import retrieved_docs
 
 st.title("Welcome to Katifunza")
-st.write(
-    "Where we simplify the constitution for you"
-)
+st.write("Where we simplify the constitution for you")
 
 txt = st.text_area(
     "Enter your question about the constitution",
-    )
+)
 
 if st.button("Send"):
     st.write("The output will appear bellow:")

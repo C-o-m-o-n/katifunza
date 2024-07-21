@@ -1,8 +1,9 @@
 from crewai import Agent, Process, Task, Crew
 from textwrap import dedent
+
 # from crewai_tools import (
-    # PDFSearchTool,
-    # WebsiteSearchTool
+# PDFSearchTool,
+# WebsiteSearchTool
 # )
 from data_magic.data_job import PreProcess
 from langchain_cohere import ChatCohere
@@ -11,6 +12,8 @@ from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
 preprocessor = PreProcess()
+
+
 # agents
 class Agents:
     def __init__(self):
@@ -21,28 +24,33 @@ class Agents:
         return Agent(
             role="Constitutional Scholar",
             backstory=dedent(
-                f"""You are a legal expert who study and analyze constitutions. The people need you."""),
+                f"""You are a legal expert who study and analyze constitutions. The people need you."""
+            ),
             goal=dedent(
-                f"""Uncover any information from Kenyan constitution exceptionally well."""),
+                f"""Uncover any information from Kenyan constitution exceptionally well."""
+            ),
             verbose=True,
             llm=self.llm,
-            allow_delegation=False
-            
+            allow_delegation=False,
         )
 
     def writer_agent(self):
         return Agent(
             role="Writer",
             backstory=dedent(
-                f"""You are good at breaking down and explaining information and writing summaries."""),
+                f"""You are good at breaking down and explaining information and writing summaries."""
+            ),
             goal=dedent(
-                f"""Take the information from the pdf agent and explain it to people without education backgrounds summarize it nicely."""),
+                f"""Take the information from the pdf agent and explain it to people without education backgrounds summarize it nicely."""
+            ),
             verbose=True,
             llm=self.llm,
-            allow_delegation=False
+            allow_delegation=False,
         )
 
+
 # tasks
+
 
 class Tasks:
     def __init__(self, vector_store):
@@ -77,7 +85,9 @@ class Tasks:
             agent=agent,
         )
 
+
 # the crew
+
 
 class OurCrew:
     def __init__(self, question, vector_store):
@@ -94,28 +104,23 @@ class OurCrew:
         writer_agent = agents.writer_agent()
 
         # Custom tasks include agent name and variables as input
-        task1 = tasks.pdf_task(
-            pdf_agent,
-            self.question
-        )
+        task1 = tasks.pdf_task(pdf_agent, self.question)
 
         task2 = tasks.writer_task(
             writer_agent,
         )
 
-        #custom crew
+        # custom crew
         crew = Crew(
-                    agents=[pdf_agent, writer_agent],
-                    tasks=[task1, task2],
-                    verbose=True,
-                    process=Process.sequential,
-                            embedder={
-                        "provider": "cohere",
-                        "config":{
-                            "model": "embed-english-light-v3.0"
-                            }
-                            }
-                )
+            agents=[pdf_agent, writer_agent],
+            tasks=[task1, task2],
+            verbose=True,
+            process=Process.sequential,
+            embedder={
+                "provider": "cohere",
+                "config": {"model": "embed-english-light-v3.0"},
+            },
+        )
 
         result = crew.kickoff()
         return result
