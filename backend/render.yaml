@@ -1,0 +1,11 @@
+services:
+  - type: web
+    plan: free
+    name: katifunza_server
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn katifunza_server.wsgi.application -k uvicorn.workers.UvicornWorker"
+    env:
+      - name: DJANGO_SETTINGS_MODULE
+        value: katifunza_server.settings
+      - name: SECRET_KEY
