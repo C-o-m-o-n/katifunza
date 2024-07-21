@@ -77,10 +77,10 @@ class PreProcess:
         return vector_store.similarity_search_by_vector(embedding, top_k)
 
 
-if __name__ == "__main__":
-    preprocessor = PreProcess()
-    vector_store = preprocessor.store_embeddings("constitution.pdf")
+# if __name__ == "__main__":
+#     preprocessor = PreProcess()
+#     vector_store = preprocessor.store_embeddings("constitution.pdf")
 
-    query = "What are the rights of the people?"
-    result = preprocessor.query_vector_store(query, vector_store)
-    print("result: ", result)
+#     query = "What are the rights of the people?"
+#     result = preprocessor.query_vector_store(query, vector_store)
+#     print("result: ", result)

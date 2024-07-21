@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    path("", lambda request: HttpResponse("Hello, world! Welcome to katiFunza"), name="home"),
+    path('prompt/', views.AgentPromptView.as_view(), name='agent-prompt'),
 ]

@@ -1,10 +1,5 @@
 from crewai import Agent, Process, Task, Crew
 from textwrap import dedent
-
-# from crewai_tools import (
-# PDFSearchTool,
-# WebsiteSearchTool
-# )
 from data_magic.data_job import PreProcess
 from langchain_cohere import ChatCohere
 from decouple import config
@@ -12,7 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
 preprocessor = PreProcess()
-
 
 # agents
 class Agents:
@@ -50,8 +44,6 @@ class Agents:
 
 
 # tasks
-
-
 class Tasks:
     def __init__(self, vector_store):
         self.vector_store = vector_store
@@ -65,12 +57,10 @@ class Tasks:
             description=dedent(
                 f"""
             get as munch information as fast as you can, retreived from {relevant_chunks}.
-            Use this as what I want to be explained: {question}
-            
+            Use this as what I want to be explained: {question}       
             {self.__tip_section()}
-    
             Make sure to be as accurate as possible. 
-        """
+            """
             ),
             expected_output="Full analysis.",
             agent=agent,
@@ -87,8 +77,6 @@ class Tasks:
 
 
 # the crew
-
-
 class OurCrew:
     def __init__(self, question, vector_store):
         self.question = question
@@ -127,13 +115,13 @@ class OurCrew:
 
 
 # This is the main function that you will use to run your custom crew.
-if __name__ == "__main__":
-    vector_store = preprocessor.store_embeddings("data_magic/constitution.pdf")
-    print("## Welcome to Katifunza AI")
-    print("-------------------------------")
-    question = input(dedent("""Enter your question: """))
+# if __name__ == "__main__":
+#     vector_store = preprocessor.store_embeddings("data_magic/constitution.pdf")
+#     print("## Welcome to Katifunza AI")
+#     print("-------------------------------")
+#     question = input(dedent("""Enter your question: """))
 
-    custom_crew = OurCrew(question, vector_store)
-    result = custom_crew.run()
+    # custom_crew = OurCrew(question, vector_store)
+    # result = custom_crew.run()
 #     print("########################\n")
 #     print(result)
